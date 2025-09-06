@@ -3,6 +3,7 @@ package com.imperialgrand.backend.config;
 import com.imperialgrand.backend.filter.JWTAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.ConcreteProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -33,7 +33,7 @@ public class SecurityConfig {
     private String localhostOrigin;
 
     @Value("${PRODUCTION_ORIGIN}")
-    private String productionOrigin;
+    private String PROD_ORIGIN;
 
 
 
@@ -62,7 +62,7 @@ public class SecurityConfig {
 
     private CorsConfigurationSource corsConfiguration() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(productionOrigin.split(",")));
+        configuration.setAllowedOrigins(List.of("http://localhost:63342", "http://127.0.0.1:5500", "http://localhost:8080",localhostOrigin, PROD_ORIGIN));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "x-device-id", "x-auth-intent"));
         configuration.setExposedHeaders(List.of("Set-Cookie"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
