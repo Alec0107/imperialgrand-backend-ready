@@ -49,6 +49,10 @@ public class MailService {
             System.out.println("Email send error" + e.getMessage());
             e.printStackTrace();
             return false;
+        } catch (Exception e) {
+            System.err.println("sendContactMessage failed:");
+            e.printStackTrace();   // <— this shows 535/530/553 etc.
+            return false;
         }
     }
 
