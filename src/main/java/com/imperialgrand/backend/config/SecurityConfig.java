@@ -3,7 +3,6 @@ package com.imperialgrand.backend.config;
 import com.imperialgrand.backend.filter.JWTAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.ConcreteProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
