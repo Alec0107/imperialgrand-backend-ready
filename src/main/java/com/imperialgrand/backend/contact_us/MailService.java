@@ -1,6 +1,7 @@
 package com.imperialgrand.backend.contact_us;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imperialgrand.backend.contact_us.dto.ContactUs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,12 +18,13 @@ import java.util.List;
 public class MailService {
 
     private final RestTemplate http = new RestTemplate();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Value("${zeptomail.api.url}")
     private String apiUrl;
 
     @Value("${zeptomail.api.key}")
-    private String apiKey;
+    private String apiKeyRaw;
 
     @Value("${zeptomail.from.address}")
     private String fromAddress;
@@ -30,19 +32,19 @@ public class MailService {
     @Value("${zeptomail.from.name:Imperial Grand}")
     private String fromName;
 
-    public boolean sendContactMessage(ContactUs c) {
-        String subject = "[New Contact] From: %s | Subject: %s"
-                .formatted(c.getEmail(), c.getSubject());
+    private String apiKey() { return apiKeyRaw == null ? "" : apiKeyRaw.trim(); }
 
-        // Use htmlbody to match your successful curl
+    public boolean sendContactMessage(ContactUs c) {
+        String subject = "[New Contact] From: %s | Subject: %s".formatted(c.getEmail(), c.getSubject());
+
         String htmlBody = """
-                <div>
-                  <h3>New contact form submission</h3>
-                  <p><b>Name:</b> %s<br/>
-                     <b>Email:</b> %s</p>
-                  <p><b>Message:</b><br/>%s</p>
-                </div>
-                """.formatted(c.getName(), c.getEmail(), c.getMessage());
+            <div>
+              <h3>New contact form submission</h3>
+              <p><b>Name:</b> %s<br/>
+                 <b>Email:</b> %s</p>
+              <p><b>Message:</b><br/>%s</p>
+            </div>
+        """.formatted(c.getName(), c.getEmail(), escapeHtml(c.getMessage()));
 
         EmailRequest payload = new EmailRequest(
                 new From(fromAddress, fromName),
@@ -55,21 +57,18 @@ public class MailService {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
             headers.setContentType(MediaType.APPLICATION_JSON);
+            // IMPORTANT: scheme string exactly like your working curl
+            headers.set("Authorization", "Zoho-enczapikey " + apiKey());
 
-            // IMPORTANT: Capitalize exactly as your working curl
-            headers.set("Authorization", "Zoho-enczapikey " + apiKey.trim());
+            // log what we actually send
+            String json = mapper.writeValueAsString(payload);
+            System.out.println("ZeptoMail request JSON: " + json);
 
-            HttpEntity<EmailRequest> req = new HttpEntity<>(payload, headers);
+            HttpEntity<String> req = new HttpEntity<>(json, headers);
             ResponseEntity<String> res = http.postForEntity(apiUrl, req, String.class);
 
-            if (res.getStatusCode().is2xxSuccessful()) {
-                System.out.println("ZeptoMail response: " + res.getBody());
-                return true;
-            } else {
-                System.err.println("ZeptoMail error: " + res.getStatusCode() +
-                        " body=" + res.getBody());
-                return false;
-            }
+            System.out.println("ZeptoMail status=" + res.getStatusCode() + " body=" + res.getBody());
+            return res.getStatusCode().is2xxSuccessful();
 
         } catch (HttpStatusCodeException e) {
             System.err.println("ZeptoMail API error: " + e.getStatusCode() +
@@ -81,7 +80,11 @@ public class MailService {
         }
     }
 
-    // DTO classes
+    private static String escapeHtml(String s) {
+        return s == null ? "" : s.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;");
+    }
+
+    // DTOs shaped exactly like curl body
     @Data @NoArgsConstructor @AllArgsConstructor
     static class EmailRequest {
         private From from;
