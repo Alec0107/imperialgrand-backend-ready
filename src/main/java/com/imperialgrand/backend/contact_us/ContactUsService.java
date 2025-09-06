@@ -35,11 +35,11 @@ public class ContactUsService {
             throw new InternalServerError("Something wrong in sending email to company's email inbox");
         }
 
-        boolean wasAcknowledgeSent = mailService.senAcknowledgementEmail(contactUs);
-        if(!wasAcknowledgeSent){
-            // log but don't fail the request
-            System.err.println("Acknowledgement email failed for: " + contactUs.getEmail());
-        }
+//        boolean wasAcknowledgeSent = mailService.senAcknowledgementEmail(contactUs);
+//        if(!wasAcknowledgeSent){
+//            // log but don't fail the request
+//            System.err.println("Acknowledgement email failed for: " + contactUs.getEmail());
+//        }
 
     }
 
