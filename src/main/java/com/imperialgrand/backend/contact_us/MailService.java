@@ -43,9 +43,11 @@ public class MailService {
             return true;
         } catch (MessagingException e) {
             System.out.println("Email send error" + e.getMessage());
+            e.printStackTrace();
             return false;
         } catch (UnsupportedEncodingException e) {
             System.out.println("Email send error" + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
