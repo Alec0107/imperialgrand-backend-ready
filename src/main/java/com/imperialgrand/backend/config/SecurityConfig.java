@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -32,8 +33,8 @@ public class SecurityConfig {
     @Value("${localhost.origin}")
     private String localhostOrigin;
 
-    @Value("${PROD_ORIGIN}")
-    private String PROD_ORIGIN;
+    @Value("${PRODUCTION_ORIGIN}")
+    private String productionOrigin;
 
 
 
@@ -62,7 +63,7 @@ public class SecurityConfig {
 
     private CorsConfigurationSource corsConfiguration() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:63342", "http://127.0.0.1:5500", "http://localhost:8080",localhostOrigin, PROD_ORIGIN));
+        configuration.setAllowedOrigins(Arrays.asList(productionOrigin.split(",")));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "x-device-id", "x-auth-intent"));
         configuration.setExposedHeaders(List.of("Set-Cookie"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));

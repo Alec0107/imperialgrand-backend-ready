@@ -27,8 +27,8 @@ public class MailService {
         try {
             var mm = mailSender.createMimeMessage();
             var h = new MimeMessageHelper(mm, false,"UTF-8");
-            h.setFrom(new InternetAddress(sender, "Imperial Grand Cantonese Cuisine "));
-            h.setTo(sender);
+            h.setFrom("contact@imperialgrandsg.com");
+            h.setTo("contact@imperialgrandsg.com");
             h.setReplyTo(contactUs.getEmail());
             h.setSubject("[New Contact] From: " + contactUs.getEmail() + " | Subject: " + contactUs.getSubject());
             h.setText("""
