@@ -53,7 +53,7 @@ public class MailService {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Authorization", "Zoho-enczapikey " + apiKey);
+            headers.set("Authorization", "zoho-enczapikey " + apiKey);
 
             HttpEntity<EmailRequest> req = new HttpEntity<>(payload, headers);
             ResponseEntity<String> res = http.postForEntity(apiUrl, req, String.class);
