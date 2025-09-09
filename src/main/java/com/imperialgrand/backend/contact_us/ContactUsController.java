@@ -25,7 +25,7 @@ public class ContactUsController {
     public ResponseEntity<?> submitContact(@RequestBody ContactUs contactUsRequest, HttpServletRequest request){
         // 1. get the client's ip address
         String clientIp = "contactus:ip:" + getClientIp(request);
-        contactUsService.validateContactUsRequest(contactUsRequest, clientIp);
+//        contactUsService.validateContactUsRequest(contactUsRequest, clientIp);
         return ResponseEntity.ok(Map.of("status", "ok",
                                         "message", "Thank you! Your message has been received. We’ll get back to you soon."));
     }

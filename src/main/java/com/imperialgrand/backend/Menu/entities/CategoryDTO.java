@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "menu_categories")
+public class CategoryDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

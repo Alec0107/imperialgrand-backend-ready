@@ -1,4 +1,4 @@
-package com.imperialgrand.backend.Menu;
+package com.imperialgrand.backend.Menu.repo;
 
 import com.imperialgrand.backend.Menu.entities.CategoryDTO;
 import org.springframework.data.jpa.repository.JpaRepository;

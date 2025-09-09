@@ -48,7 +48,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             "/api/v1/auth/reset-password/",
             "/api/v1/auth/reset-password/validate",
             "/api/v1/contact",
-
+            "/api/menu/categories/get_all_cats",
+            "/api/menu/categories/fetch_category"
+            ,"/api/menu/set-menu/fetch_set_menu",
+            "/api/menu/items",
 
             // Reservation public endpoints...
             "/api/v1/reservation/availability"
@@ -137,9 +140,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 if(authIntent.equals("guest")){
                     logger.info("Guest access allowed for endpoint: " + path);
                 }else{
-                     logger.info("User endpoint hit: " + path);
-                     exceptionSendBuilder("Access token is missing or expired.", response);
-                     return;
+                    logger.info("User endpoint hit: " + path);
+                    exceptionSendBuilder("Access token is missing or expired.", response);
+                    return;
                 }
 
 
