@@ -1,7 +1,7 @@
 package com.imperialgrand.backend.jwt.model;
 
 
-import com.imperialgrand.backend.user.model.User;
+import com.imperialgrand.backend.authentication.DTO.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +34,6 @@ public class JwtToken {
     private LocalDateTime expiresAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    @JoinColumn(name = "user_id", referencedColumnName = "id") // <-- use "id"
     private User user;
 }

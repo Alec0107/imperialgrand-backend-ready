@@ -13,13 +13,14 @@ import java.util.Optional;
 
 @Repository
 public interface JwtTokenRepository extends JpaRepository<JwtToken, Long> {
-    @Query("SELECT t FROM JwtToken t WHERE t.user.userId = :userId AND t.revoked = false")
+    @Query("SELECT t FROM JwtToken t WHERE t.user.id = :userId AND t.revoked = false")
     Optional<JwtToken> findByUserAndRevokedFalseAndExpiredFalse(@Param("userId") int userId);
 
     Optional<JwtToken> findByToken(String token);
 
     @Query(value = "SELECT * FROM jwt_tokens WHERE user_id = :userId AND device_id = :deviceId AND revoked = false", nativeQuery = true)
-    Optional<JwtToken> findJwtTokenByDeviceIdAndUserId(@Param("userId") int userId, @Param("deviceId") String deviceId);
+    Optional<JwtToken> findJwtTokenByDeviceIdAndUserId(@Param("userId") Long userId,
+                                                       @Param("deviceId") String deviceId);
 }
 
 

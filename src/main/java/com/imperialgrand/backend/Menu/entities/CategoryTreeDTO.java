@@ -1,9 +1,6 @@
 package com.imperialgrand.backend.Menu.entities;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
@@ -11,6 +8,7 @@ import java.util.List;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class CategoryTreeDTO {
 
     private Long catId;

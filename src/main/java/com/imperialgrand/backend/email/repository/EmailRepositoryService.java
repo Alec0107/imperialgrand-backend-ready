@@ -1,9 +1,9 @@
 package com.imperialgrand.backend.email.repository;
 
+import com.imperialgrand.backend.authentication.DTO.User;
 import com.imperialgrand.backend.email.exception.EmailTokenException;
 import com.imperialgrand.backend.email.exception.EmailTokenExpiredException;
 import com.imperialgrand.backend.email.model.EmailVerificationToken;
-import com.imperialgrand.backend.user.model.User;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 
@@ -37,7 +37,7 @@ public class EmailRepositoryService {
     }
 
     public Optional<EmailVerificationToken> getByUserId(int userId){
-        return emailRepository.findByUser_userId(userId);
+        return emailRepository.findByUser_Id((long) userId);
     }
 
     public void isEmailTokenExpired(LocalDateTime expiryTime, int tokenId){

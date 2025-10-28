@@ -1,5 +1,7 @@
 package com.imperialgrand.backend.common.globalexception;
 
+import com.imperialgrand.backend.Menu.Exception.MenuItemNotFoundExcetion;
+import com.imperialgrand.backend.authentication.Exception.*;
 import com.imperialgrand.backend.contact_us.exception.InternalServerError;
 import com.imperialgrand.backend.email.exception.EmailAlreadyVerifiedException;
 import com.imperialgrand.backend.email.exception.EmailTokenException;
@@ -36,6 +38,7 @@ public class GlobalExceptionHandler {
     private static final String NOT_FOUND= "NOT_FOUND";
     private static final String TOO_MANY_REQUEST = "Too many requests";
     private static final String INTERNA= "UNAUTHORIZED";
+
 
 
     @ExceptionHandler(EmailAlreadyUsedException.class)
@@ -237,4 +240,74 @@ public class GlobalExceptionHandler {
                 HttpStatus.GONE.value());
         return ResponseEntity.status(HttpStatus.GONE).body(errorResponse);
     }
+
+
+    @ExceptionHandler(MenuItemNotFoundExcetion.class)
+    public ResponseEntity<ErrorResponse> handleMenuItemNotFoundException(MenuItemNotFoundExcetion ex){
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getMessage(),
+                NOT_FOUND,
+                HttpStatus.NOT_FOUND.value());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    // NEW VERSION
+    // AUTHENTICATION
+
+    // 1. OTP HASHING EXCEPTION
+    //1.1 This catches any exc eption during otp code hashing
+    @ExceptionHandler(OtpHashingException.class)
+    public ResponseEntity<ErrorResponse> handleOtpException(OtpHashingException ex){
+        ErrorResponse res = new ErrorResponse(
+                ex.getMessage(),
+                "SERVER_ERROR",
+                HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res);
+    }
+
+    //1.2 This catches any exception during verification of the otp
+    @ExceptionHandler(OtpVerificationException.class)
+    public ResponseEntity<ErrorResponse> handleOtpException(OtpVerificationException ex){
+        ErrorResponse res = new ErrorResponse(
+                ex.getMessage(),
+                ex.getStatus().name(),
+                ex.getStatus().value());
+        return ResponseEntity.status(ex.getStatus()).body(res);
+    }
+
+    // 2. DURING SIGN UP
+    //2.1 This specifically catches duplicate email violations
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleUserExistedException(UserAlreadyExistsException ex){
+        ErrorResponse res = new ErrorResponse(
+                ex.getMessage(),
+                "USER_ALREADY_EXISTS",
+                HttpStatus.CONFLICT.value());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(res);
+    }
+
+    //2.2 Other generic DB errors
+    @ExceptionHandler(UserPersistenceException.class)
+    public ResponseEntity<ErrorResponse> handleUserPersistenceException(UserPersistenceException ex){
+        ErrorResponse res = new ErrorResponse(
+                ex.getMessage(),
+                "USER_SAVE_FAILED",
+                HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res);
+    }
+
+
+    @ExceptionHandler(TooManyOtpAttemptException.class)
+    public ResponseEntity<ErrorResponse> handleTooManyAttempt(TooManyOtpAttemptException ex){
+        ErrorResponse res = new ErrorResponse(
+                ex.getMessage(),
+                ex.getStatus().name(),
+                HttpStatus.TOO_MANY_REQUESTS.value(),
+                ex.getRetryAt());
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(res);
+    }
+
+
+
+
 }

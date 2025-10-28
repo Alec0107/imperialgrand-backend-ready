@@ -1,7 +1,7 @@
 package com.imperialgrand.backend.reservation.table_entity;
 
+import com.imperialgrand.backend.authentication.DTO.User;
 import com.imperialgrand.backend.reservation.enums.ReservationStatus;
-import com.imperialgrand.backend.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -14,6 +14,11 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
 
     Page<MenuItem> findByCategoryIdAndSubcategoryIdAndIsActiveTrueOrderByDisplayOrderAsc(Long categoryId, Long subcategoryId, Pageable pageable);
 
+    Optional<MenuItem> findById(Long Id);
+
     Optional<MenuItem> findBySlugAndIsActiveTrue(String slug);
+
+
+
 
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
+
 @Table(name = "menu_subcategory")
 public class SubcategoryDTO {
 

@@ -1,4 +1,6 @@
 package com.imperialgrand.backend.authentication.DTO.records;
 
-public record UserLoginRequest() {
-}
+public record UserLoginRequest(
+        String email,
+        String password
+){}

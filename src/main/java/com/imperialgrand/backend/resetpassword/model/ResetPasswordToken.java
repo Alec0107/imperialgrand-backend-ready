@@ -1,6 +1,6 @@
 package com.imperialgrand.backend.resetpassword.model;
 
-import com.imperialgrand.backend.user.model.User;
+import com.imperialgrand.backend.authentication.DTO.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +30,6 @@ public class ResetPasswordToken {
     private boolean used;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    @JoinColumn(name = "user_id", referencedColumnName = "id") // <-- use "id"
     private User user;
 }

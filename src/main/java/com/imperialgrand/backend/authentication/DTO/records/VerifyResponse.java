@@ -1,4 +1,7 @@
 package com.imperialgrand.backend.authentication.DTO.records;
 
-public class VerifyResponse {
-}
+public record VerifyResponse (
+        boolean success,
+        String message,
+        String next_step
+){}

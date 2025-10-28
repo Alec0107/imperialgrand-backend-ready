@@ -44,6 +44,10 @@ dependencies {
 
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+    // for thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+
 
 
 }

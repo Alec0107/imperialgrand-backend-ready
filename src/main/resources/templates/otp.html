@@ -2,81 +2,74 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>Email OTP</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style>
-            * {
-              box-sizing: border-box;
-              margin: 0;
-              padding: 0;
-              font-size: 16px;
-              letter-spacing: 1px;
-            }
-
-            html, body {
-              height: 100vh;
-              width: 100%;
-              background-color: black;
-              scroll-behavior: smooth;
-              padding: 20px;
-            }
-
-            .main-div{
-              width: 50%;
-              height: 50%;
-              min-width: 450px;
-              max-width: 500px;
-
-              margin: 0px auto;
-              padding: 20px;
-
-              display: flex;
-              flex-direction: column;
-              gap: 30px;
-
-
-              font-family: sans-serif;
-              color: white;
-            }
-
-            .main-div h2{
-               font-size: 1.2rem;
-            }
-
-            .main-div p{
-                font-size: 0.8rem;
-                font-weight: 100;
-                line-height: 20px
-            }
-
-            .main-div h1{
-                font-weight: 700;
-                font-size: 2rem;
-            }
-
-            .min{
-               font-size: 0.8rem;
-               font-weight: 700;
-            }
-        </style>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <!-- Helps some clients not auto-invert colors -->
+        <meta name="color-scheme" content="light only">
+        <meta name="supported-color-schemes" content="light">
+        <title>Email Verification Code</title>
     </head>
 
+    <body style="margin:0;padding:0;background:#000000;">
+    <!-- Outer wrapper (full width, black bg) -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#000000;">
+        <tr>
+            <td align="center" style="padding:24px;">
+                <!-- Card (fixed max width) -->
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#000000;">
 
-    <body>
+                    <!-- LOGO -->
+                    <tr>
+                        <td align="c" style="padding:10px 0px 50px;  ">
+                            <img src="https://imperialgrandsg.com/img/logo.png" alt="Imperial Grand" width="70" style="display:block;">
+                        </td>
+                    </tr>
 
-        <div class="main-div">
+                    <tr>
+                        <td style="padding:0 16px 8px 16px;font-family:Arial,Helvetica,sans-serif;color:#ffffff;">
+                            <h2 style="margin:0 0 8px 0;font-size:22px;line-height:28px;font-weight:700;">
+                                Email Verification Code
+                            </h2>
+                            <p style="margin:0 0 16px 0;font-size:14px;line-height:20px;color:#d6d6d6;">
+                                Please use the code below to complete your registration:
+                            </p>
+                        </td>
+                    </tr>
 
-            <h2>Email Verification Code</h2>
+                    <!-- OTP block -->
+                    <tr>
+                        <td align="left" style="padding:0 16px 16px 16px;">
+                            <div  style="display:inline-block;background:#111;border:1px solid #d4af37;border-radius:8px;padding:14px 20px;">
+                                <span th:text="${otp}" style="font-family:Arial,Helvetica,sans-serif;font-size:34px;line-height:40px;letter-spacing:4px;font-weight:700;color:#ffffff;">054032</span>
+                            </div>
+                        </td>
+                    </tr>
 
-            <p>Please use the code below to complete your registration:</p>
+                    <!-- Meta text -->
+                    <tr>
+                        <td style="padding:4px 16px 0 16px;font-family:Arial,Helvetica,sans-serif;">
+                            <p style="margin:0 0 16px 0;font-size:13px;line-height:18px;color:#c9c9c9;">
+                                This code will expire in <strong th:text="${minutes}" style="color:#ffffff;">15</strong> minutes.
+                            </p>
+                            <p style="margin:0 0 24px 0;font-size:12px;line-height:18px;color:#9f9f9f;">
+                                Thank you for signing up! If this wasn’t you, you can safely ignore this message.
+                            </p>
+                        </td>
+                    </tr>
 
-            <h1 th:text="${otp}">054032</h1>
 
-            <p>This code will expire in <span class="min" th:text="${minutes}">15</span> minutes.<br><br>
-                Thank you for signing up! If this wasn’t you, you can safely ignore this message.
-        </div>
+                    <!-- Footer (optional) -->
+                    <tr>
+                        <td style="padding:10px 16px 0 16px;font-family:Arial,Helvetica,sans-serif;text-align:left;">
+                            <p style="margin:0 0 24px 0;font-size:11px;line-height:16px;color:#6f6f6f;">
+                                © <span th:text="${#dates.format(#dates.createNow(),'yyyy')}">2025</span> Imperial Grand Cantonese Cuisine. All rights reserved.
+                            </p>
+                        </td>
+                    </tr>
 
+                </table>
+            </td>
+        </tr>
+    </table>
     </body>
-
-
 </html>
+

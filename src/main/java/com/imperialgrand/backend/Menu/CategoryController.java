@@ -43,17 +43,16 @@ public class CategoryController {
             System.out.println(catTree.getCatId());
             System.out.println(catTree.getCatName());
             System.out.println(catTree.getCatSlug());
-
             for(SubcategoryDTO s: catTree.getSubcategories()) {
                 System.out.println(s.toString());
             }
-
-
         }
-
         System.out.println("FINISH\n");
         return ResponseEntity.ok(cat);
     }
+
+
+
 
 
 }

@@ -52,11 +52,20 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             "/api/menu/categories/fetch_category"
             ,"/api/menu/set-menu/fetch_set_menu",
             "/api/menu/items",
+            "/api/menu/fetch-item",
 
             // Reservation public endpoints...
-            "/api/v1/reservation/availability"
+            "/api/v1/reservation/availability",
 
-            // test endpoints for reservation
+            // NEW ENDPOINTS FOR SCHOOL PROJ IMPERIAL GRAND
+            // 1. Authentication public endpoints
+            "/api/auth/signup",
+            // 2. To verify user account by sending otp
+            "/api/auth/verify",
+            // 3. To resend otp
+            "/api/auth/resend-otp",
+            // 4. Login
+            "/api/auth/login"
 
     );
 

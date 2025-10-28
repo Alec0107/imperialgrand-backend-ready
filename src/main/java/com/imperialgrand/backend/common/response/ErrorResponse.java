@@ -11,6 +11,7 @@ public class ErrorResponse {
    private String error;
    private String message;
    private LocalDateTime timestamp;
+   private long retryAt;
 
     public ErrorResponse(String message, String error, int statusCode) {
         this.success = false;
@@ -20,5 +21,17 @@ public class ErrorResponse {
         this.timestamp = LocalDateTime.now();
     }
 
+    public ErrorResponse(String message, String error, int statusCode, long retryAt) {
+        this.success = false;
+        this.message = message;
+        this.error = error;
+        this.statusCode = statusCode;
+        this.timestamp = LocalDateTime.now();
+        this.retryAt = retryAt;
+    }
+
+    public ErrorResponse(String message, String error, String statusCode, long retryAt){
+
+    }
 
 }

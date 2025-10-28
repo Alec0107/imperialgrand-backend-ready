@@ -1,5 +1,6 @@
 package com.imperialgrand.backend.reservation;
 
+import com.imperialgrand.backend.authentication.DTO.User;
 import com.imperialgrand.backend.common.utils.InputValidator;
 import com.imperialgrand.backend.redis.reservation_locks.ReservationLockingService;
 import com.imperialgrand.backend.reservation.dto.*;
@@ -12,7 +13,6 @@ import com.imperialgrand.backend.reservation.table_entity.ReservationOccasion;
 import com.imperialgrand.backend.reservation.table_entity.TableEntity;
 import com.imperialgrand.backend.reservation.reservation_repository.ReservationRepositoryService;
 import com.imperialgrand.backend.reservation.tables_repository.TableRepositoryService;
-import com.imperialgrand.backend.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

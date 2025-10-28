@@ -3,11 +3,9 @@ package com.imperialgrand.backend.Menu.MenuItem;
 import com.imperialgrand.backend.Menu.entities.MenuItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/menu")
@@ -26,6 +24,19 @@ public class MenuItemController {
     ){
         return menuItemService.menuItemLists(categoryId, subcategoryId, page, size);
     }
+
+
+//    @GetMapping("/fetch/signature")
+
+
+    @GetMapping("/fetch-item")
+    public ResponseEntity<MenuItem> fetchProductById(@RequestParam Long id){
+        MenuItem item = menuItemService.getMenuItemById(id);
+        System.out.println("Product Id: " + id);
+
+        return ResponseEntity.ok(item);
+    }
+
 
 
 }

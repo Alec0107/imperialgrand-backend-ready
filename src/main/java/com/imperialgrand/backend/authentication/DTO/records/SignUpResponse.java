@@ -1,9 +1,9 @@
-package com.imperialgrand.backend.authentication.DTO;
+package com.imperialgrand.backend.authentication.DTO.records;
 
 public record SignUpResponse(String verifyId,
                              String email,
                              String maskedEmail,
-                             int codeTTLMins,
-                             int resendCooldownSecond,
-                             String message) {
-}
+                             long verifyCooldown,
+                             long resendCooldownMs,
+                             String message
+){}

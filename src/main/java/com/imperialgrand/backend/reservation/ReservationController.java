@@ -1,10 +1,10 @@
 package com.imperialgrand.backend.reservation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.imperialgrand.backend.authentication.DTO.User;
 import com.imperialgrand.backend.reservation.dto.ReservationDTO;
 import com.imperialgrand.backend.reservation.dto.ReservationLockStatusDTO;
 import com.imperialgrand.backend.reservation.dto.SubmissionPayload;
-import com.imperialgrand.backend.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;

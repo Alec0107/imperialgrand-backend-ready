@@ -1,5 +1,6 @@
 package com.imperialgrand.backend.config;
 
+import com.imperialgrand.backend.authentication.Repository.UserAccountRepository;
 import com.imperialgrand.backend.user.exception.EmailNotFoundException;
 import com.imperialgrand.backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final UserRepository userRepository;
+    private final UserAccountRepository userRepository;
 
 
     // UserDetailService for fetching userDetails from userRepository
