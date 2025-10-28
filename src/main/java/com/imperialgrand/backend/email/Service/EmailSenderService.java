@@ -9,17 +9,42 @@ import org.springframework.mail.SimpleMailMessage;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 
 @Service
 @RequiredArgsConstructor
 public class EmailSenderService {
 
-
     @Value("${spring.mail.username}")
     private String sender;
-
     private final JavaMailSender mailSender;
+    private final TemplateEngine templateEngine;
+
+
+    public void sendOtpViaEmail(String to, String name, String otp){
+        Context context = new Context();
+        context.set
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final String ResetURL = "http://localhost:5500/pages/forgot-password/reset-password.html";
 
@@ -64,7 +89,6 @@ public class EmailSenderService {
 
     }
 
-
     public String sendResetPasswordEmail(String toEmail, String firstName, String token, int tokenId) {
         String msg = null;
         try{
@@ -96,6 +120,16 @@ public class EmailSenderService {
         }
 
         return msg;
+    }
+
+
+    public void testEmail(String otp){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(sender);
+        message.setTo("melrich.npl@gmail.com");
+        message.setSubject("[Imperial Grand] Reset Your Password");
+        message.setText("Hi! This is your otp: " + otp);
+        mailSender.send(message);
     }
 
 

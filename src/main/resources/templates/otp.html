@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Email OTP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+            * {
+              box-sizing: border-box;
+              margin: 0;
+              padding: 0;
+              font-size: 16px;
+              letter-spacing: 1px;
+            }
+
+            html, body {
+              height: 100vh;
+              width: 100%;
+              background-color: black;
+              scroll-behavior: smooth;
+              padding: 20px;
+            }
+
+            .main-div{
+              width: 50%;
+              height: 50%;
+              min-width: 450px;
+              max-width: 500px;
+
+              margin: 0px auto;
+              padding: 20px;
+
+              display: flex;
+              flex-direction: column;
+              gap: 30px;
+
+
+              font-family: sans-serif;
+              color: white;
+            }
+
+            .main-div h2{
+               font-size: 1.2rem;
+            }
+
+            .main-div p{
+                font-size: 0.8rem;
+                font-weight: 100;
+                line-height: 20px
+            }
+
+            .main-div h1{
+                font-weight: 700;
+                font-size: 2rem;
+            }
+
+            .min{
+               font-size: 0.8rem;
+               font-weight: 700;
+            }
+        </style>
+    </head>
+
+
+    <body>
+
+        <div class="main-div">
+
+            <h2>Email Verification Code</h2>
+
+            <p>Please use the code below to complete your registration:</p>
+
+            <h1 th:text="${otp}">054032</h1>
+
+            <p>This code will expire in <span class="min" th:text="${minutes}">15</span> minutes.<br><br>
+                Thank you for signing up! If this wasn’t you, you can safely ignore this message.
+        </div>
+
+    </body>
+
+
+</html>
