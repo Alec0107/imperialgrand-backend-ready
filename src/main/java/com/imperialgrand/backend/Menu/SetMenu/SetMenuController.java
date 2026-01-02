@@ -1,5 +1,6 @@
 package com.imperialgrand.backend.Menu.SetMenu;
 
+import com.imperialgrand.backend.Menu.dto.CNYMenuResponseDTO;
 import com.imperialgrand.backend.Menu.entities.SetMenu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,5 +22,14 @@ public class SetMenuController {
     ){
         return setMenuService.list(page, size);
     }
+
+    @GetMapping("/cny")
+    public Page<CNYMenuResponseDTO> cnyLists(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size
+    ){
+        return setMenuService.fetchCnyMenus(page, size);
+    }
+
 }
 
