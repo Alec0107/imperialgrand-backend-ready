@@ -56,7 +56,8 @@ public class SetMenuService {
                 menu.getCategory(),
                 menu.getNameEn(),
                 menu.getNameCn(),
-                options
+                options,
+                menu.getCoursesJson()
         );
     }
 

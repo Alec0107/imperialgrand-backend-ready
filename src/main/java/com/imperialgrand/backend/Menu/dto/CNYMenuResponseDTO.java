@@ -9,5 +9,6 @@ public record CNYMenuResponseDTO(
         String category,
         String nameEn,
         String nameCn,
-        List<MenuOptionDTO> options
+        List<MenuOptionDTO> options,
+        String coursesJson
 ) { }
