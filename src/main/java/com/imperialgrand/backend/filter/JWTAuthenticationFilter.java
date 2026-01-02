@@ -1,6 +1,5 @@
 package com.imperialgrand.backend.filter;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imperialgrand.backend.jwt.exception.InvalidJwtTokenException;
 import com.imperialgrand.backend.jwt.JwtGeneratorService;
@@ -65,7 +64,16 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             // 3. To resend otp
             "/api/auth/resend-otp",
             // 4. Login
-            "/api/auth/login"
+            "/api/auth/login",
+            // 5. Refresh token
+            "/api/auth/refresh-token",
+            // FOR RESERVATIONS
+            "/api/reservation/availability",
+            "/api/reservation/status",
+            "/api/reservation/guest/submit",
+
+            // FOR ADMIN PUBLIC
+            "/api/auth/admin/login"
 
     );
 
@@ -80,6 +88,19 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         if(authIntent != null) {
             logger.info("AUTH INTENT: " + authIntent);
         }
+
+        // ================== ADD THIS BLOCK (right here) ==================
+        // Let SockJS/STOMP handshake URLs bypass this JWT filter
+        if (path.startsWith("/ws")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        // (Optional but useful) let CORS preflight pass
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        // ================================================================
 
 
         /**
@@ -110,7 +131,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             for(Cookie cookie : request.getCookies()){
                 if(cookie.getName().equals("access-token")){
                     accessJwtToken = cookie.getValue();
+                    logger.info("ACCESS TOKEN: " + accessJwtToken);
                     break;
+                }else{
+                    logger.info(cookie.getName());
                 }
             }
         }
@@ -128,7 +152,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 //            exceptionSendBuilder("Access token is missing or expired.", response);
 //            return;
 //        }
-
         try{
             /**
              * Step 2: If access token exists -> validate and set context
@@ -138,7 +161,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     logger.info("Access token found...");
                     // load userEmail from db
                     UserDetails userDetails = jwtService.validateAccessToken(accessJwtToken);
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }else if(OPTIONAL_AUTH_ENDPOINTS.contains(path)){
@@ -153,8 +177,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     exceptionSendBuilder("Access token is missing or expired.", response);
                     return;
                 }
-
-
             }else{
                 /**
                  * Step 4: Protected private endpoints

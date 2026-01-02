@@ -14,4 +14,10 @@ public class GuestInfoDTO {
     private String lastName;
     private String email;
     private String phoneNumber;
+
+    public String getFullName(){
+        return firstName + lastName;
+    }
+
 }
+

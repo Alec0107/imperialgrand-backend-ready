@@ -112,5 +112,54 @@ public class CategoryService {
 
         return finalResult;
     }
+//public List<CategoryTreeDTO> retrieveCategoriesAndSubCategories() {
+//
+//    // 1. Fetch all categories
+//    List<CategoryDTO> categories = categoryRepository.findAllByOrderByDisplayOrderAsc();
+//
+//    // 2. Take all category ids and put in a list
+//    List<Long> catIds = new ArrayList<>();
+//    for (CategoryDTO category : categories) {
+//        catIds.add(category.getId());
+//    }
+//
+//    // 3. Fetch all Sub-Category using Category IDs
+//    List<SubcategoryDTO> subs = subcategoryRepository.findByCategoryIdInOrderByDisplayOrderAsc(catIds);
+//
+//    // 4. Index subs by categoryId
+//    Map<Long, List<SubcategoryDTO>> subByCat = new HashMap<>();
+//    for (SubcategoryDTO sub : subs) {
+//        Long catId = sub.getCategoryId();
+//        subByCat.putIfAbsent(catId, new ArrayList<>());
+//        subByCat.get(catId).add(sub);
+//    }
+//
+//    // 5. Build Category Tree
+//    List<CategoryTreeDTO> result = new ArrayList<>();
+//
+//    for (CategoryDTO c : categories) {
+//        // Create category node
+//        CategoryTreeDTO catNode = new CategoryTreeDTO(c.getId(), c.getName(), c.getSlug());
+//
+//        // Get subcategories for the current category (or empty list)
+//        List<SubcategoryDTO> subForCat = subByCat.getOrDefault(c.getId(), new ArrayList<>());
+//
+//        // Add subcategories
+//        for (SubcategoryDTO sub : subForCat) {
+//            SubcategoryDTO subNode = new SubcategoryDTO(
+//                    sub.getId(),
+//                    sub.getName(),
+//                    sub.getSlug(),
+//                    sub.getDisplayOrder()
+//            );
+//            catNode.getSubcategories().add(subNode);
+//        }
+//
+//        result.add(catNode);
+//    }
+//
+//    return result;
+//}
+
 
 }

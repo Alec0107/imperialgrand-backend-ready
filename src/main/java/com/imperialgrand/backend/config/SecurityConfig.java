@@ -36,22 +36,32 @@ public class SecurityConfig {
     private String PROD_ORIGIN;
 
 
-
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfiguration()))
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers(
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/ws/**").disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/admin/dashboard/**").hasRole("ADMIN")
+                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers(
+                                "/api/auth/admin/reservations", "/api/auth/admin/customers",
+                                "/api/auth/admin/menu-items", "/api/auth/admin/menu-categories",
+                                "/api/auth/admin/menu-subcategories", "/api/auth/admin/menu-item-update").hasRole("ADMIN")
+                        .requestMatchers(
                                 "/api/v1/auth/register","/api/v1/auth/verify","/api/v1/auth/login",
                                 "/api/v1/auth/resend-verification","/api/v1/auth/inbox-resend-verification",
                                 "/api/v1/test/publicHello", "/api/v1/auth/detailsTest", "/api/v1/auth/forgot-password",
                                 "/api/v1/auth/reset-password", "/api/v1/auth/reset-password/validate", "/api/v1/auth/refresh-token",
-                                "/api/v1/contact","/api/v1/reservation/availability", "/api/v1/reservation/lock_status", "api/v1/reservation/submit", "/api/menu/categories/**", "/api/menu/set-menu/**","/api/menu/items/**", "/api/menu/fetch-item", "/api/auth/signup", "/api/auth/verify", "/api/auth/resend-otp", "/api/auth/login").permitAll() /// PUBLIC: ALLOW WITHOUT TOKEN
+                                "/api/v1/contact","/api/v1/reservation/availability", "/api/v1/reservation/lock_status", "api/v1/reservation/submit",
+                                "/api/menu/categories/**", "/api/menu/set-menu/**","/api/menu/items/**", "/api/menu/fetch-item",
+                                "/api/auth/signup", "/api/auth/verify", "/api/auth/resend-otp", "/api/auth/login", "/api/auth/refresh-token",
+                                "/api/reservation/availability","/api/reservation/status", "/api/reservation/guest/submit",
+                                "/api/auth/admin/login").permitAll()
+
 //                                                    .requestMatchers("api/v1/reservation/submit").hasRole("USER") /// REQUIRE ROLE: USER MAINLY
-                        .anyRequest().authenticated()) /// CATCH ALL: A FALLBACK MEANS MUST LOGGED IN
+                        .anyRequest().authenticated())
+
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

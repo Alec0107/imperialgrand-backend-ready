@@ -39,9 +39,15 @@ public class SetMenu {
         @Column(name = "blurb_cn")
         private String blurbCn;
 
-        // store JSON as raw text (jsonb in DB)
-        @Column(name = "courses_json", columnDefinition = "jsonb")
-        private String coursesJson;
+    // other imports/annotations stay the same
+
+    @Column(
+            name = "courses_json",
+            columnDefinition = "jsonb",
+            insertable = false,
+            updatable = false
+    )
+    private String coursesJson;
 
         @Column(name = "display_order", nullable = false)
         private Integer displayOrder = 999;

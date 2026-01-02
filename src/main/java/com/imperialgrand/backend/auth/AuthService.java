@@ -534,6 +534,9 @@ public class AuthService {
 //            user = userRepositoryService.getUserByEmail(userEmail);
 //            JwtToken matchingToken = jwtRepositoryService.getTokenByUserIdAndDeviceId(Long.valueOf(user.getUserId()), deviceId);
 //
+
+
+
 //            // DB expiration check should come before claims check
 //            if (matchingToken.getExpiresAt().isBefore(LocalDateTime.now())) {
 ////                matchingToken.setExpired(true);

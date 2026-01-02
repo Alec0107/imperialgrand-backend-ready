@@ -9,13 +9,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
 @Data
 @Builder
+@Getter
 @Entity(name="user_account")
 @Table(name="user_account")
+
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -44,6 +47,8 @@ public class User implements UserDetails {
     private Instant createdAt;
     private Instant updatedAt;
 
+    private LocalDate birthday;
+
     @Enumerated(EnumType.STRING)
     private Role role; // Default role for normal users
 
@@ -56,5 +61,9 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public String getName() {
+        return name;
     }
 }

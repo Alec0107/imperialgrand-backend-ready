@@ -18,15 +18,11 @@ import java.util.List;
 @Data
 @Table(name = "reservations")
 public class Reservation {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer reservationId;
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long reservationId;
     private LocalDate date;
     private LocalTime time;
     private int guestCount;
-
     // Guest reservation info (nullable because logged-in users won’t fill this)
     @Column(nullable = true)
     private String firstName;

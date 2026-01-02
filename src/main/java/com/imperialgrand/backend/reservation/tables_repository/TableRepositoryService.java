@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class TableRepositoryService {
 
-    private final TableRepository tableRepository;
+    private final com.imperialgrand.backend.reservation.tables_repository.TableRepository tableRepository;
 
     public List<TableEntity> finAllTableEntities() {
         return tableRepository.findAll();

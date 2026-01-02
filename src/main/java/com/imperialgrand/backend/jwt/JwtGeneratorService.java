@@ -1,5 +1,7 @@
 package com.imperialgrand.backend.jwt;
 
+import com.imperialgrand.backend.authentication.Repository.UserAccountRepository;
+import com.imperialgrand.backend.authentication.Repository.UserAccountRepositoryService;
 import com.imperialgrand.backend.jwt.exception.InvalidJwtTokenException;
 import com.imperialgrand.backend.jwt.model.JwtExpiration;
 import com.imperialgrand.backend.jwt.repository.JwtTokenRepository;
@@ -26,7 +28,7 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class JwtGeneratorService {
 
-    private final UserRepository userRepository;
+    private final UserAccountRepositoryService userAccountRepositoryService;
     @Value("${jwt.secret}")
     private String secretKey;
     private final JwtTokenRepository jwtTokenRepository;
@@ -41,8 +43,6 @@ public class JwtGeneratorService {
 //    public String generateAccessToken(User user){
 //        return generateToken(user, JwtExpiration.ACCESS_TOKEN.getExpirationMillis(), "access-token");
 //    }
-
-
 //    public String generateToken(User user, long expirationMillis, String tokenType) {
 //        Map<String, Object> claims = new HashMap<>();
 //        claims.put("firstname", user.getFirstName());
@@ -61,9 +61,26 @@ public class JwtGeneratorService {
 //
 //        return token;
 //    }
-
     public UserDetails validateAccessToken(String token){
-        return null;
+        try {
+            // Add this to bug fixes
+           Claims claim = extractAllClaims(token);
+           String userEmail = claim.getSubject();
+           System.out.println(userEmail);
+
+            // validate if access token is expired
+           if(claim.getExpiration().before(new Date())) throw new InvalidJwtTokenException("Access token expired");
+
+            // get the user subject (email in this case) and find in db
+            UserDetails userDetails = userAccountRepositoryService.findUserByEmail(userEmail);
+
+            logger.info("Access token validated for: {" + userEmail+ "}");
+
+            return userDetails;
+
+        }catch(JwtException e){
+            throw new InvalidJwtTokenException(e.getMessage());
+        }
     }
 
 //    public UserDetails validateAccessToken(String token){
@@ -88,7 +105,6 @@ public class JwtGeneratorService {
 //            throw new InvalidJwtTokenException(e.getMessage());
 //        }
 //    }
-
     public Claims extractAllClaims(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
@@ -102,9 +118,6 @@ public class JwtGeneratorService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-
-
-
     private boolean isTokenExpired(String token) {
         Claims claims = extractAllClaims(token);
         return claims.getExpiration().before(new Date());
@@ -114,8 +127,6 @@ public class JwtGeneratorService {
         Claims claims = extractAllClaims(token);
         return claims.getSubject();
     }
-
-
 
     public String generateRefreshToken(com.imperialgrand.backend.authentication.DTO.User user, Duration expiry) {
         return generateToken(user, expiry, "refresh-token");

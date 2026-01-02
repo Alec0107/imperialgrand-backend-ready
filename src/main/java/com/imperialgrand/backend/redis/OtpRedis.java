@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 public class OtpRedis {
 
     private final Logger logger = Logger.getLogger(OtpRedis.class.getName());
-
     private final StringRedisTemplate redis;
     private final ObjectMapper mapper;
     private final OtpUtil otpUtil;
@@ -151,5 +150,4 @@ public class OtpRedis {
     private String keyBuilder(String verifyId){
         return String.format("verify:otp:%s", verifyId);
     }
-
 }
