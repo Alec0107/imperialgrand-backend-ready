@@ -35,7 +35,10 @@ public class SetMenuService {
                 cnyMenuRepository.findByCategoryAndIsActiveTrue("CNY", pageable);
 
 
-        return menus.map(this::toDTO);
+        return menus.map(menu -> {
+            menu.getOptions().size();
+            return toDTO(menu);
+        });
     }
 
     private CNYMenuResponseDTO toDTO(CNYMenu menu) {
