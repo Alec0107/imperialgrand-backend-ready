@@ -73,7 +73,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             "/api/reservation/guest/submit",
 
             // FOR ADMIN PUBLIC
-            "/api/auth/admin/login"
+            "/api/auth/admin/login",
+
+            "/api/menu/set-menu/cny"
 
     );
 

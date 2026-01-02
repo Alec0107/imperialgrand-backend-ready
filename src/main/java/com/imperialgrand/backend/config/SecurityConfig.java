@@ -57,7 +57,7 @@ public class SecurityConfig {
                                 "/api/menu/categories/**", "/api/menu/set-menu/**","/api/menu/items/**", "/api/menu/fetch-item",
                                 "/api/auth/signup", "/api/auth/verify", "/api/auth/resend-otp", "/api/auth/login", "/api/auth/refresh-token",
                                 "/api/reservation/availability","/api/reservation/status", "/api/reservation/guest/submit",
-                                "/api/auth/admin/login").permitAll()
+                                "/api/auth/admin/login", "/api/menu/set-menu/cny").permitAll()
 
 //                                                    .requestMatchers("api/v1/reservation/submit").hasRole("USER") /// REQUIRE ROLE: USER MAINLY
                         .anyRequest().authenticated())
